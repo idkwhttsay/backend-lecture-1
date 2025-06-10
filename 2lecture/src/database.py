@@ -15,7 +15,9 @@ AsyncSessionLocal = sessionmaker(
 )
 
 
-sync_engine = create_engine(settings.sync_database_url, echo=True)
+sync_engine = create_engine(
+    settings.sync_database_url,
+    echo=True)
 SyncSessionLocal = sessionmaker(
     bind=sync_engine,
     autocommit=False,

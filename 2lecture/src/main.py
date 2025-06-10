@@ -5,10 +5,12 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from auth.api import router as auth_router
 from database import get_async_db
+from tasks.api import router as tasks_router
 
 app = FastAPI()
 
 app.include_router(auth_router, tags=["auth"])
+app.include_router(tasks_router, tags=["tasks"])
 
 
 @app.get("/")

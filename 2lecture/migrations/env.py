@@ -10,6 +10,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
 
 from auth import schema  # Import to register schema with Base.metadata
 from database import Base
+from tasks import schema  # Import to register schema with Base.metadata
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
