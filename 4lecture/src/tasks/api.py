@@ -1,11 +1,15 @@
-from fastapi import APIRouter, Depends, Body, Path, Query, HTTPException
-from sqlalchemy.ext.asyncio import AsyncSession
 from typing import List
+
+from fastapi import APIRouter, Body, Depends, HTTPException, Path, Query
+from sqlalchemy.ext.asyncio import AsyncSession
+
 from database import get_async_db
-from tasks.models import TaskCreate, TaskUpdate, Task as TaskResponse
 from tasks.crud import TaskCRUD
+from tasks.models import Task as TaskResponse
+from tasks.models import TaskCreate, TaskUpdate
 
 router = APIRouter()
+
 
 @router.post("/tasks", response_model=TaskResponse)
 async def create_task(
@@ -13,7 +17,7 @@ async def create_task(
     db: AsyncSession = Depends(get_async_db)
 ):
     """Create a new task"""
-await TaskCRUD.create_task(db, task)
+    return await TaskCRUD.create_task(db, task)
 
 
 @router.get("/tasks/{task_id}", response_model=TaskResponse)

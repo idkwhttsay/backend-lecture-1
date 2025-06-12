@@ -93,6 +93,3 @@ def trigger_random_task_creation():
         "message": "Random task creation has been triggered"
     } 
 
-
-@celery_app.task
-def 
