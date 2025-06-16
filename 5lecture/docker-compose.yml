@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@db:5432/fastapi_db
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/credentials.json
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+      - ./credentials.json:/app/credentials.json:ro
+
+  db:
+    image: postgres:15
+    environment:
+      - POSTGRES_DB=fastapi_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
