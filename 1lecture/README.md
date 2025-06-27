@@ -11,7 +11,7 @@
 
 ### Tasks
 
-- [ ] Create a dockerfile for your own application(FastAPI)
+- [x] Create a dockerfile for your own application(FastAPI)
 - [ ] Connect your application to database(Postgresql)
 - [ ] Connect CI/CD by Github Actions
 
