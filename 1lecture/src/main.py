@@ -1,7 +1,8 @@
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 
-from .config import settings
-from .tasks.api import router as tasks_router
+from src.config import settings
+from src.tasks.api import router as tasks_router
 
 app = FastAPI()
 
@@ -12,3 +13,4 @@ def read_root():
 
 
 app.include_router(tasks_router)
+app.mount("/", StaticFiles(directory="src/static", html=True), name="static")

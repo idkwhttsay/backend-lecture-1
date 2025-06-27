@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task App</title>
+</head>
+<body>
+    <h1>Task List</h1>
+    <ul id="tasks"></ul>
+    <h2>Add Task</h2>
+    <form id="taskForm">
+        <input type="text" id="title" placeholder="Title" required>
+        <input type="text" id="description" placeholder="Description" required>
+        <button type="submit">Add</button>
+    </form>
+    <script>
+        async function fetchTasks() {
+            const res = await fetch('/tasks/get_all');
+            const tasks = await res.json();
+            const ul = document.getElementById('tasks');
+            ul.innerHTML = '';
+            tasks.forEach(task => {
+                const li = document.createElement('li');
+                li.textContent = `${task.title}: ${task.description}`;
+                ul.appendChild(li);
+            });
+        }
+        document.getElementById('taskForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const title = document.getElementById('title').value;
+            const description = document.getElementById('description').value;
+            await fetch('/tasks/create', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({title, description})
+            });
+            fetchTasks();
+        };
+        fetchTasks();
+    </script>
+</body>
+</html>

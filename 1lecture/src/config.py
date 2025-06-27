@@ -9,7 +9,7 @@ load_dotenv(dotenv_path=env_path)
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file='.env')
-    name: str
+    name: str = "Tasks FastAPI App"
 
 
 settings = Settings()
