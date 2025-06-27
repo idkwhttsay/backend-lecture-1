@@ -1,32 +1,33 @@
-from typing import List
+from sqlalchemy import create_engine, Column, Integer, String, Boolean, DateTime
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker, Session
+from datetime import datetime
+from typing import Optional
 
 from .tasks.models import Task
+from .config import settings
 
-_fake_db: List[Task] = []
-_id_counter = 1
+engine = create_engine(settings.database_url)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+Base = declarative_base()
+
+class TaskDB(Base):
+    __tablename__ = "tasks"
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String, nullable=False)
+    description = Column(String, nullable=False)
+    completed = Column(Boolean, default=False)
+    deadline = Column(DateTime, nullable=True)
 
 
-def save_task(task_data) -> Task:
-    global _id_counter
-    task = Task(id=_id_counter, completed=False, **task_data.dict())
-    _fake_db.append(task)
-    _id_counter += 1
-    return task
+def create_tables():
+    Base.metadata.create_all(bind=engine)
 
 
-def get_all_tasks() -> List[Task]:
-    return _fake_db
-
-def update_task(task_id, task_data):
-    for idx, task in enumerate(_fake_db):
-        if task.id == task_id:
-            updated_task = Task(id=task_id, completed=task.completed, **task_data.dict())
-            _fake_db[idx] = updated_task
-            return updated_task
-    return None
-
-def delete_task(task_id):
-    for idx, task in enumerate(_fake_db):
-        if task.id == task_id:
-            return _fake_db.pop(idx)
-    return None
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()

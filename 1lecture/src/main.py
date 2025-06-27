@@ -2,10 +2,15 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
 from src.config import settings
+from src.database import create_tables
 from src.tasks.api import router as tasks_router
 
 app = FastAPI()
 
+
+@app.on_event("startup")
+def startup_event():
+    create_tables()
 
 @app.get("/")
 def read_root():

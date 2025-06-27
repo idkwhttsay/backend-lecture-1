@@ -15,3 +15,7 @@ class Task(BaseModel):
     title: str
     description: str
     completed: bool
+    deadline: Optional[datetime] = None
+
+    class Config:
+        from_attributes = True
