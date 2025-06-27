@@ -1,10 +1,7 @@
 from sqlalchemy import create_engine, Column, Integer, String, Boolean, DateTime
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, Session
-from datetime import datetime
-from typing import Optional
+from sqlalchemy.orm import sessionmaker
 
-from .tasks.models import Task
 from .config import settings
 
 engine = create_engine(settings.database_url)
