@@ -1,12 +1,18 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
+from contextlib import asynccontextmanager
 
 from src.config import settings
 from src.database import create_tables
 from src.tasks.api import router as tasks_router
 
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    from src.database import create_db_and_tables
+    create_db_and_tables()
+    yield
 
+app = FastAPI(lifespan=lifespan)
 
 @app.on_event("startup")
 def startup_event():

@@ -1,30 +1,53 @@
-from sqlalchemy import create_engine, Column, Integer, String, Boolean, DateTime
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from typing import Annotated, Optional, List
+
+from fastapi import Depends
+from sqlmodel import SQLModel, create_engine, Session, select
 
 from .config import settings
+from .tasks.models import Task
 
 engine = create_engine(settings.database_url)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-Base = declarative_base()
 
-class TaskDB(Base):
-    __tablename__ = "tasks"
+def create_db_and_tables():
+    SQLModel.metadata.create_all(engine)
 
-    id = Column(Integer, primary_key=True, index=True)
-    title = Column(String, nullable=False)
-    description = Column(String, nullable=False)
-    completed = Column(Boolean, default=False)
-    deadline = Column(DateTime, nullable=True)
+def get_session():
+    with Session(engine) as session:
+        yield session
+
+SessionDep = Annotated[Session, Depends(get_session)]
+
+def save_task(task_data, session: SessionDep) -> Task:
+    task = Task(**task_data.dict(), completed=False)
+    session.add(task)
+    session.commit()
+    session.refresh(task)
+    return task
 
 
-def create_tables():
-    Base.metadata.create_all(bind=engine)
+def get_all_tasks(session: SessionDep) -> List[Task]:
+    tasks = session.exec(select(Task)).all()
+    return list(tasks)
 
+def update_task(task_id: int, task_data, session: SessionDep) -> Optional[Task]:
+    task = session.get(Task, task_id)
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+    if task:
+        for key, value in task_data.dict().items():
+            setattr(task, key, value)
+        session.add(task)
+        session.commit()
+        session.refresh(task)
+        return task
+
+    return None
+
+def delete_task(task_id, session: SessionDep) -> Optional[Task]:
+    task = session.get(Task, task_id)
+
+    if task:
+        session.delete(task)
+        session.commit()
+        return task
+
+    return None
