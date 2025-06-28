@@ -1,5 +1,0 @@
-fastapi
-uvicorn
-google-cloud-storage
-python-multipart
-google-resumable-media
