@@ -1,4 +1,5 @@
 from typing import List, Optional
+from sqlalchemy.orm import Session
 
 from src.database import get_all_tasks, save_task, update_task, delete_task, SessionDep
 from src.tasks.models import Task, TaskCreate

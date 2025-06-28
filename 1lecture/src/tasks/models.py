@@ -10,7 +10,6 @@ class TaskCreate(BaseModel):
     deadline: Optional[datetime] = None
     description: str
 
-
 class Task(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     title: str = Field(..., max_length=100)

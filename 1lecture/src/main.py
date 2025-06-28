@@ -3,6 +3,7 @@ from fastapi.staticfiles import StaticFiles
 from contextlib import asynccontextmanager
 
 from src.config import settings
+from src.database import create_tables
 from src.tasks.api import router as tasks_router
 
 @asynccontextmanager
@@ -12,6 +13,10 @@ async def lifespan(app: FastAPI):
     yield
 
 app = FastAPI(lifespan=lifespan)
+
+@app.on_event("startup")
+def startup_event():
+    create_tables()
 
 @app.get("/")
 def read_root():

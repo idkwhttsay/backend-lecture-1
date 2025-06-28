@@ -2,6 +2,7 @@ from typing import List, Annotated
 
 from fastapi import APIRouter, HTTPException, Body, status
 
+from src.database import get_db
 from .crud import TaskCRUD
 from .models import Task, TaskCreate
 from ..database import SessionDep
