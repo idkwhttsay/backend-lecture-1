@@ -5,7 +5,7 @@ import logging
 from fastapi import APIRouter, Depends, HTTPException, status
 
 from src.auth.models import Token, UserResponseDTO, User, UserDTO
-from src.auth.service import authenticate_user, create_access_token, get_current_active_user, create_user
+from src.auth.service import create_access_token, authenticate_user, create_user, get_current_active_user
 from src.config import settings
 from src.database import SessionDep
 

@@ -1,23 +1,46 @@
 from typing import List, Optional
-from sqlalchemy.orm import Session
 
-from src.database import get_all_tasks, save_task, update_task, delete_task, SessionDep
-from src.tasks.models import Task, TaskCreate
+from sqlmodel import select
+
+from src.database import SessionDep
+from src.tasks.models import Task
 
 
-class TaskCRUD:
+class TaskService:
     @staticmethod
-    def create_task(task_data: TaskCreate, session: SessionDep) -> Task:
-        return save_task(task_data, session)
+    def create_task(task_data, session: SessionDep) -> Task:
+        task = Task(**task_data.dict(), completed=False)
+        session.add(task)
+        session.commit()
+        session.refresh(task)
+        return task
 
     @staticmethod
     def get_all_tasks(session: SessionDep) -> List[Task]:
-        return get_all_tasks(session)
+        tasks = session.exec(select(Task)).all()
+        return list(tasks)
 
     @staticmethod
-    def update_task(task_id: int, task_data: TaskCreate, session: SessionDep) -> Optional[Task]:
-        return update_task(task_id, task_data, session)
+    def update_task(task_id: int, task_data, session: SessionDep) -> Optional[Task]:
+        task = session.get(Task, task_id)
+
+        if task:
+            for key, value in task_data.dict().items():
+                setattr(task, key, value)
+            session.add(task)
+            session.commit()
+            session.refresh(task)
+            return task
+
+        return None
 
     @staticmethod
     def delete_task(task_id: int, session: SessionDep) -> Optional[Task]:
-        return delete_task(task_id, session)
+        task = session.get(Task, task_id)
+
+        if task:
+            session.delete(task)
+            session.commit()
+            return task
+
+        return None
