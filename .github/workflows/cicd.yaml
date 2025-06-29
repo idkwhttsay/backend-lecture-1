@@ -87,7 +87,7 @@ jobs:
 
     - name: Test Docker compose
       run: |
-        docker-compose up -d
+        docker compose up -d
         sleep 30
         # Basic health check
         curl -f http://localhost:8000/docs || exit 1
