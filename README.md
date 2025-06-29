@@ -13,7 +13,7 @@
 
 - [x] Create a dockerfile for your own application(FastAPI)
 - [x] Connect your application to database(Postgresql)
-- [ ] Connect CI/CD by Github Actions
+- [x] Connect CI/CD by Github Actions
 
 ## 🥇 Hard Level
 
