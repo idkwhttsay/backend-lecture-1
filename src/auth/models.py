@@ -9,6 +9,10 @@ class Token(BaseModel):
 class TokenData(BaseModel):
     username: str | None = None
 
+class UserTokenDTO(BaseModel):
+    username: str
+    password: str
+
 class UserDTO(BaseModel):
     username: str
     email: EmailStr

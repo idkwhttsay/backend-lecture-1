@@ -4,18 +4,16 @@ import logging
 
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from src.auth.models import Token, UserResponseDTO, User, UserDTO
+from src.auth.models import Token, UserResponseDTO, User, UserDTO, UserTokenDTO
 from src.auth.service import create_access_token, authenticate_user, create_user, get_current_active_user
 from src.config import settings
 from src.database import SessionDep
 
 router = APIRouter(prefix="/auth")
 
-# TODO: add logic for refresh token and change logic of access token expiration
-
 @router.post("/token")
 async def login_for_access_token(
-    user_data: UserDTO,
+    user_data: UserTokenDTO,
     session: SessionDep
 ) -> Token:
     user = authenticate_user(user_data.username, user_data.password, session=session)
