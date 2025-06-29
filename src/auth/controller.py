@@ -1,6 +1,5 @@
 from datetime import timedelta
 from typing import Annotated
-import logging
 
 from fastapi import APIRouter, Depends, HTTPException, status
 
@@ -37,9 +36,7 @@ async def register_user(
     user_dto: UserDTO,
     session: SessionDep
 ):
-    logging.info(f" User DTO: {user_dto}")
     user = create_user(user_dto, session)
-    logging.info(f"Registered user: {user}")
 
     if not user:
         raise HTTPException(

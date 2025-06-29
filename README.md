@@ -13,7 +13,7 @@
 
 - [x] Create a dockerfile for your own application(FastAPI)
 - [x] Connect your application to database(Postgresql)
-- [x] Connect CI/CD by Github Actions
+- [ ] Connect CI/CD by Github Actions
 
 ## 🥇 Hard Level
 
@@ -21,8 +21,10 @@
 
 - [x] Create JWT authentication and authorization
 - [x] Create a docker compose file for your own application(FastAPI, Postgres)
-- [ ] Create Secured endpoints
+- [x] Create Secured endpoints
   - [x] `/me` - get user info
-  - [ ] `/create_task` - create a task
-  - [ ] `/get_tasks` - get all my tasks
+  - [x] `/create_task` - create a task
+  - [x] `/get_tasks` - get all my tasks
   - .etc
+
+[//]: # (TODO: add refresh token logic \(maybe\))
