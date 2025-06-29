@@ -17,6 +17,9 @@ class Settings(BaseSettings):
     postgres_db: str = getenv("POSTGRES_DB")
     postgres_host: str = getenv("POSTGRES_HOST", "localhost")
     postgres_port: int = int(getenv("POSTGRES_PORT", 5432))
+    secret_key: str = getenv("SECRET_KEY")
+    algorithm: str = getenv("ALGORITHM", "HS256")
+    access_token_expire_minutes: int = int(getenv("ACCESS_TOKEN_EXPIRE_MINUTES", 30))
 
     @property
     def database_url(self) -> str:

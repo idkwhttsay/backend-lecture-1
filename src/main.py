@@ -3,8 +3,8 @@ from fastapi.staticfiles import StaticFiles
 from contextlib import asynccontextmanager
 
 from src.config import settings
-from src.database import create_tables
-from src.tasks.api import router as tasks_router
+from src.tasks.controller import router as tasks_router
+from src.auth.controller import router as auth_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -14,14 +14,11 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
-@app.on_event("startup")
-def startup_event():
-    create_tables()
-
 @app.get("/")
 def read_root():
     return {"message": f"Hello {settings.name}"}
 
 
 app.include_router(tasks_router)
+app.include_router(auth_router)
 app.mount("/", StaticFiles(directory="src/static", html=True), name="static")
