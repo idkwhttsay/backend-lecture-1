@@ -11,6 +11,8 @@ from src.database import SessionDep
 
 router = APIRouter(prefix="/auth")
 
+# TODO: add logic for refresh token and change logic of access token expiration
+
 @router.post("/token")
 async def login_for_access_token(
     user_data: UserDTO,

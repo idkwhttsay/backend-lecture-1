@@ -19,10 +19,10 @@
 
 ### Tasks
 
-- [ ] Create JWT authentication and authorization
+- [x] Create JWT authentication and authorization
 - [x] Create a docker compose file for your own application(FastAPI, Postgres)
 - [ ] Create Secured endpoints
-  - [ ] `/me` - get user info
+  - [x] `/me` - get user info
   - [ ] `/create_task` - create a task
   - [ ] `/get_tasks` - get all my tasks
   - .etc
