@@ -7,6 +7,7 @@ import jwt
 from jwt import InvalidTokenError
 from passlib.context import CryptContext
 from sqlalchemy.exc import IntegrityError
+from sqlmodel import select
 
 from src.auth.models import User, TokenData, UserDTO
 from src.config import settings
@@ -28,7 +29,7 @@ def disable_user(user: User, session: SessionDep):
     session.refresh(user)
 
 def get_user(username: str, session: SessionDep) -> User | None:
-    user = session.query(User).filter_by(username=username).first()
+    user = session.exec(select(User).where(User.username == username)).first()
     if user:
         return user
     return None

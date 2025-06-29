@@ -9,7 +9,7 @@ from src.tasks.models import Task
 class TaskService:
     @staticmethod
     def create_task(task_data, current_user: User, session: SessionDep) -> Task:
-        task = Task(**task_data.dict(), completed=False, user_id=current_user.id)
+        task = Task(**task_data.model_dump(), completed=False, user_id=current_user.id)
         session.add(task)
         session.commit()
         session.refresh(task)
@@ -25,7 +25,7 @@ class TaskService:
         task = session.exec(select(Task).where(Task.id == task_id, Task.user_id == current_user.id)).first()
 
         if task:
-            for key, value in task_data.dict().items():
+            for key, value in task_data.model_dump().items():
                 setattr(task, key, value)
             session.add(task)
             session.commit()

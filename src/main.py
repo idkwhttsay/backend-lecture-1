@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from contextlib import asynccontextmanager
+from src.database import create_db_and_tables
 
 from src.config import settings
 from src.tasks.controller import router as tasks_router
@@ -8,7 +9,6 @@ from src.auth.controller import router as auth_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    from src.database import create_db_and_tables
     create_db_and_tables()
     yield
 

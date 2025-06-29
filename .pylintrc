@@ -1,0 +1,113 @@
+[MASTER]
+# Use multiple processes to speed up Pylint
+jobs=1
+
+# Files or directories to be skipped
+ignore=migrations,venv,.venv,env,.env
+
+# Add files or directories matching the regex patterns to the ignore-list
+ignore-patterns=.*\.pyc,.*\.pyo,.*\.pyd,.*__pycache__.*
+
+[MESSAGES CONTROL]
+# Disable specific warnings/errors that are common in FastAPI apps
+disable=
+    C0114,  # missing-module-docstring
+    C0115,  # missing-class-docstring
+    C0116,  # missing-function-docstring
+    R0903,  # too-few-public-methods (common with Pydantic models)
+    W0613,  # unused-argument (common with dependency injection)
+    C0103,  # invalid-name (for variables like `db`)
+    R0801,  # duplicate-code
+    W0621,  # redefined-outer-name (common with pytest fixtures)
+    C0411,  # wrong-import-order
+    R0913,  # too-many-arguments (common in FastAPI endpoints)
+    R0914,  # too-many-locals
+    W0212,  # protected-access (sometimes needed with SQLAlchemy)
+
+[FORMAT]
+# Maximum number of characters on a single line
+max-line-length=200
+
+# Allow the body of an if to be on the same line as the test if there is no else
+single-line-if-stmt=no
+
+[VARIABLES]
+# List of additional names supposed to be defined in builtins
+additional-builtins=
+
+# List of strings which can identify a callback function by name
+callbacks=cb_,_cb
+
+[SIMILARITIES]
+# Minimum lines number of a similarity
+min-similarity-lines=4
+
+# Ignore comments when computing similarities
+ignore-comments=yes
+
+# Ignore docstrings when computing similarities
+ignore-docstrings=yes
+
+# Ignore imports when computing similarities
+ignore-imports=no
+
+[MISCELLANEOUS]
+# List of note tags to take in consideration
+notes=FIXME,XXX,TODO
+
+[DESIGN]
+# Maximum number of arguments for function / method
+max-args=7
+
+# Maximum number of attributes for a class
+max-attributes=10
+
+# Maximum number of boolean expressions in an if statement
+max-bool-expr=5
+
+# Maximum number of branch for function / method body
+max-branches=12
+
+# Maximum number of locals for function / method body
+max-locals=15
+
+# Maximum number of parents for a class
+max-parents=7
+
+# Maximum number of public methods for a class
+max-public-methods=20
+
+# Maximum number of return / yield for function / method body
+max-returns=6
+
+# Maximum number of statements in function / method body
+max-statements=50
+
+# Minimum number of public methods for a class
+min-public-methods=2
+
+[CLASSES]
+# List of method names used to declare (i.e. assign) instance attributes
+defining-attr-methods=__init__,__new__,setUp,__post_init__
+
+# List of member names, which should be excluded from the protected access warning
+exclude-protected=_asdict,_fields,_replace,_source,_make
+
+# List of valid names for the first argument in a class method
+valid-classmethod-first-arg=cls
+
+# List of valid names for the first argument in a metaclass class method
+valid-metaclass-classmethod-first-arg=cls
+
+[IMPORTS]
+# Allow wildcard imports from modules that define __all__
+allow-wildcard-with-all=no
+
+# Analyse import fallback blocks
+analyse-fallback-blocks=no
+
+# Deprecated modules which should not be used
+deprecated-modules=optparse,tkinter.tix
+
+[EXCEPTIONS]
+# Exceptions that will emit a warning when being caught
