@@ -54,9 +54,9 @@ jobs:
       env:
         POSTGRES_USER: postgres
         POSTGRES_PASSWORD: postgres
-        POSTGRES_DB: test_db
-        POSTGRES_HOST: localhost
-        SECRET_KEY: test_secret_key_for_ci
+        POSTGRES_DB: postgres
+        POSTGRES_HOST: db
+        SECRET_KEY: 1d985aaff2081626b1df3db08813811432c8efb04fe7a75c501a7dab39cecd28
         ALGORITHM: HS256
         ACCESS_TOKEN_EXPIRE_MINUTES: 30
       run: |
@@ -91,4 +91,4 @@ jobs:
         sleep 30
         # Basic health check
         curl -f http://localhost:8000/docs || exit 1
-        docker-compose down
+        docker compose down
