@@ -3,7 +3,7 @@ services:
     image: postgres:15
     restart: unless-stopped
     ports:
-      - "5432:5432"
+      - ":5432"
     environment:
       - POSTGRES_USER=${POSTGRES_USER:-postgres}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
@@ -22,7 +22,8 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     ports:
-      - "8000:8000"
+      - "80:8000"
+      - "443:8443"
     environment:
       - POSTGRES_USER=${POSTGRES_USER:-postgres}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
@@ -32,8 +33,11 @@ services:
       - SECRET_KEY=${SECRET_KEY}
       - ALGORITHM=${ALGORITHM:-HS256}
       - ACCESS_TOKEN_EXPIRE_MINUTES=${ACCESS_TOKEN_EXPIRE_MINUTES:-30}
+      - SSL_CERT_PATH=/app/ssl/fullchain2.pem
+      - SSL_KEY_PATH=/app/ssl/privkey2.pem
     volumes:
       - .:/app
+      - /etc/letsencrypt/archive/fastapi.tatarinov.org:/app/ssl:ro
     depends_on:
       - db
 
