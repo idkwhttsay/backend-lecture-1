@@ -36,7 +36,7 @@ services:
       - db
 
   nginx:
-    container_name: fastapi_nginx
+    container_name: nginx
     image: nginx:latest
     restart: unless-stopped
     ports:
