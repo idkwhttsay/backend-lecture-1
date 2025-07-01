@@ -1,4 +1,4 @@
-FROM python:3.11-alpine
+FROM python:3.12-alpine
 
 WORKDIR /app
 
@@ -6,6 +6,4 @@ COPY . .
 
 RUN pip install -r requirements.txt
 
-EXPOSE 8000 8443
-
-CMD ["./start.sh"]
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
