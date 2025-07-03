@@ -19,8 +19,7 @@ class Settings(BaseSettings):
     secret_key: str = getenv("SECRET_KEY")
     algorithm: str = getenv("ALGORITHM", "HS256")
     access_token_expire_minutes: int = int(getenv("ACCESS_TOKEN_EXPIRE_MINUTES", 30))
-    redis_host: str = getenv("REDIS_HOST", "localhost")
-    redis_port: int = getenv("REDIS_PORT", 6379)
+    redis_url: str = getenv("REDIS_URL", "redis://localhost:6379/0")
 
 
     @property

@@ -26,7 +26,7 @@ def read_root():
 @app.get("/health")
 async def health(db: SessionDep):
     try:
-        await db.execute(text("SELECT 1"))
+        db.execute(text("SELECT 1"))
     except OperationalError:
         raise HTTPException(status_code=500, detail="Database connection failed")
 
