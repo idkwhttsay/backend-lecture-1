@@ -9,7 +9,7 @@ load_dotenv(dotenv_path=env_path)
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file='.env')
+    model_config = SettingsConfigDict(env_file=env_path)
     name: str = "Tasks FastAPI App"
     postgres_user: str = getenv("POSTGRES_USER")
     postgres_password: str = getenv("POSTGRES_PASSWORD")
@@ -19,6 +19,9 @@ class Settings(BaseSettings):
     secret_key: str = getenv("SECRET_KEY")
     algorithm: str = getenv("ALGORITHM", "HS256")
     access_token_expire_minutes: int = int(getenv("ACCESS_TOKEN_EXPIRE_MINUTES", 30))
+    redis_host: str = getenv("REDIS_HOST", "localhost")
+    redis_port: int = getenv("REDIS_PORT", 6379)
+
 
     @property
     def database_url(self) -> str:
