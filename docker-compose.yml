@@ -57,7 +57,7 @@ services:
     volumes:
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
-    command: certonly --webroot -w /var/www/certbot --force-renewal --email danil.tatarinov.00@gmail.com -d fastapi.tatarinov.org --agree-tos
+    command: certonly --webroot -w /var/www/certbot --email danil.tatarinov.00@gmail.com -d fastapi.tatarinov.org --agree-tos --keep-until-expiring
 
 volumes:
   postgres_data:
