@@ -149,5 +149,7 @@ ehthumbs.db
 Thumbs.db
 
 *.env
+.env.dev
+.env.prod
 */.env
 .azure
