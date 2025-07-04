@@ -12,9 +12,7 @@ services:
 
   server:
     container_name: server
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: d4ntatar/backend-lecture-1:latest
     restart: unless-stopped
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
