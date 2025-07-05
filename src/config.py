@@ -15,7 +15,7 @@ class Settings(BaseSettings):
     postgres_password: str = os.getenv("POSTGRES_PASSWORD", "postgres")
     postgres_db: str = os.getenv("POSTGRES_DB", "postgres")
     postgres_host: str = os.getenv("POSTGRES_HOST", "localhost")
-    postgres_port: int = int(os.getenv("POSTGRES_PORT"), 5432)
+    postgres_port: int = int(os.getenv("POSTGRES_PORT", "5432"))
     secret_key: str = os.getenv("SECRET_KEY")
     algorithm: str = os.getenv("ALGORITHM", "HS256")
     access_token_expire_minutes: int = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "30"))
