@@ -20,6 +20,8 @@ class Settings(BaseSettings):
     algorithm: str = os.getenv("ALGORITHM", "HS256")
     access_token_expire_minutes: int = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "30"))
     redis_url: str = os.getenv("REDIS_URL", "redis://localhost:6379/0")
+    celery_broker_url: str = os.getenv("CELERY_BROKER_URL", "redis://localhost:6379/0")
+    celery_result_backend: str = os.getenv("CELERY_RESULT_BACKEND", "redis://localhost:6379/0")
 
 
     @property
